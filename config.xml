@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cocoon="http://cocoon.io/ns/1.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.mru.studio.agecalculator" version="1.0.0">
+		<name>Age Calculator</name>
+		<description>
+																		        A sample Cocoon application that responds to the deviceready event.
+												    </description>
+		<author email="m.r.u.khan2017@gmail.com" href="https://cocoon.io">
+																		        Trick and Tips
+												    </author>
+		<content src="index.html"/>
+		<plugin name="cordova-plugin-whitelist" version="1"/>
+		<access origin="*"/>
+		<allow-intent href="http://*/*"/>
+		<allow-intent href="https://*/*"/>
+		<allow-intent href="tel:*"/>
+		<allow-intent href="sms:*"/>
+		<allow-intent href="mailto:*"/>
+		<allow-intent href="geo:*"/>
+		<platform name="android">
+			<allow-intent href="market:*"/>
+			<preference name="enabled" value="true"/>
+		</platform>
+		<platform name="ios">
+			<allow-intent href="itms:*"/>
+			<allow-intent href="itms-apps:*"/>
+			<preference name="enabled" value="true"/>
+		</platform>
+		<plugin name="com.ludei.webviewplus.ios" spec="*"/>
+		<plugin name="com.ludei.webviewplus.android" spec="*"/>
+		<plugin name="cordova-plugin-camera" spec="*"/>
+		<plugin name="cordova-plugin-console" spec="*"/>
+		<plugin name="cordova-plugin-device" spec="*"/>
+		<plugin name="cordova-plugin-device-orientation" spec="*"/>
+		<plugin name="cordova-plugin-dialogs" spec="*"/>
+		<plugin name="cordova-plugin-file" spec="*"/>
+		<plugin name="cordova-plugin-legacy-whitelist" spec="*"/>
+		<plugin name="cordova-plugin-splashscreen" spec="*"/>
+		<plugin name="cordova-plugin-network-information" spec="*"/>
+		<plugin name="cocoon-plugin-social-android-facebook" spec="*">
+			<variable name="APP_ID" value="2101439863415344"/>
+			<variable name="APP_NAME" value="Age Calculator"/>
+		</plugin>
+		<plugin name="cordova-plugin-facebook4" spec="*"/>
+		<plugin name="cocoon-plugin-ads-android-admob" spec="*"/>
+		<preference name="CocoonSplashScaleMode" value="scaleAspectFit"/>
+		<preference name="CocoonSplashDelay" value="5"/>
+	</widget>
