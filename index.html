@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+<!--    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="description" content="Age Calculator - Calculate Your Date of Birth Samply.">
+    <meta name="author" content="MRU Studio Inc." />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="stylesheet" href="css/theme/Riverside.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="js/index.js"></script>
+    <script src="cordova.js"></script>
+    <title>Age Calculator - Calcualte your Date Of Birth Easily.</title>
+</head>
+
+<body onload="appLoad()">
+
+<!-- Age Calculator - Homepage -->
+<div class="w3-main" id="home">
+    <!-- Top Navbar -->
+    <div class="w3-top">
+        <ul class="rz-app-topbar w3-navbar w3-theme">
+            <li class="w3-opennav"><a href="javascript:void(0)" onclick="openNav();"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+            <li class="w3-opennav" id="appName"><a class="w3-center" href="javascript:void(0)">Age Calculator</a></li>
+            <li class="w3-opennav w3-right"><a href="javascript:void(0)" onclick="window.plugins.socialsharing.share('Advance Age Calculator - Calcualte your Date Of Birth Easily. Get Download Link - ', null,'www/icon.png','http://gameappsbd.wordpress.com');"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- Homepage - Input Filed -->
+    <div id="hp" class="rz-app-margin-homepage">
+    <form class="w3-form" name="ageCal" id="ageCalForm">
+        <div id="age1" class="rz-app-date-title w3-text-theme w3-theme-l5 w3-border-theme">Today's Date: <span id="wkDay1" class="rz-app-tag-dn w3-theme">FRI</span></div>
+        <div class="rz-app-nav-input-field w3-border-theme" id="fld1">
+            <input placeholder="dd" name="tDate" id="td1" type="number" maxlength="2" />
+            <span id="exSign">-</span>
+
+            <input  placeholder="mm" name="tMonth" id="td2" type="number" maxlength="2" />
+            <span id="exSign">-</span>
+
+            <input placeholder="yyyy" name="tYear" id="td3" type="number" maxlength="4" />
+            <span id="dp1" onclick="DatePicker(this.id)" class="w3-text-theme rz-dp-icon fa fa-calendar"></span>
+        </div>
+
+        <div class="bksp"></div>
+
+        <div id="age2" class="rz-app-date-title w3-text-theme w3-theme-l5 w3-border-theme">Date of Birth: <span id="wkDay2" class="rz-app-tag-dn w3-theme">FRI</span></div>
+        <div class="rz-app-nav-input-field w3-border-theme" id="fld2">
+
+            <input placeholder="dd" name="bDate" id="bth1" type="number" maxlength="2" />
+            <span id="exSign">-</span>
+
+            <input placeholder="mm" name="bMonth" id="bth2" type="number" maxlength="2" />
+            <span id="exSign">-</span>
+
+            <input placeholder="yyyy" name="bYear" id="bth3" type="number" maxlength="4" />
+            <span id="dp2" onclick="DatePicker(this.id)" class="w3-text-theme rz-dp-icon fa fa-calendar"></span>
+        </div>
+    </form>
+
+        <!-- Homepage - Button Aera -->
+    <div class="w3-container rz-app-cal2reset-btn"><br/>
+        <button onclick="mainAgeCal()" class="w3-btn rz-btn w3-theme-d2">Calculate</button>
+        <button onclick="reset()" class="w3-btn rz-btn w3-theme-d2">Reset</button>
+     </div>
+    </div>
+</div>
+
+    <!-- Overlay Aera -->
+<div class="w3-overlay w3-animate-opacity" onclick="closeNav()" style="cursor:pointer; display:none;" id="myOverlay"></div>
+
+  <!-- Age Calculator - Result Page -->
+<div id="result" class="w3-main" style="display:none;">
+    <!-- Result Page - Topbar -->
+    <div class="w3-top">
+        <ul class="rz-app-topbar w3-navbar w3-theme">
+            <li class="w3-opennav"><a onclick="closeResultPage()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a></li>
+            <li class="w3-opennav" id="appName"><a class="w3-center">Details</a></li>
+            <li class="w3-opennav w3-right"><a onclick="makScreenShot()"><i class="fa fa-user-o" aria-hidden="true"></i></a></li>
+        </ul>
+    </div>
+
+    <!-- Result Details -->
+    <div class="rz-app-margin-resultpage">
+        <div class="w3-animate-left">
+            <table class="rz-app-result-table w3-table">
+                <tr>
+                  <th class="w3-theme-d1 w3-center" colspan="3">Age Difference</th>
+                </tr>
+                <tr>
+                  <td class="w3-center">Year</td>
+                  <td class="w3-center">Month</td>
+                  <td class="w3-center">Day</td>
+                </tr>
+                <tr>
+                  <td class="w3-center" id="oYear">00</td>
+                  <td class="w3-center" id="oMonth">00</td>
+                  <td class="w3-center" id="oDate">00</td>
+                </tr>
+            </table>
+        <br/>
+            <table class="rz-app-result-table w3-table">
+                <tr>
+                  <th class="w3-theme-d1 w3-center" colspan="3">Upcoming Birthday</th>
+                </tr>
+                <tr>
+                  <td class="rz-app-result-table-nb w3-center">Your Next Birthday After <span class="rz-badge w3-badge w3-theme-d1" id="nbDay"></span> Days.</td>
+                </tr>
+            </table>
+        <br/>
+            <table class="rz-app-result-table w3-table">
+                <tr>
+                  <th class="w3-theme-d1 w3-center" colspan="3">Age Extra</th>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Year:</td>
+                  <td class="w3-left" style="width:50%" id="blYear">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Month:</td>
+                  <td class="w3-left" style="width:50%" id="blMonth">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Week:</td>
+                  <td class="w3-left" style="width:50%" id="blWeek">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Day:</td>
+                  <td class="w3-left" style="width:50%" id="blDay">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Hour:</td>
+                  <td class="w3-left" style="width:50%" id="blHours">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Minute:</td>
+                  <td class="w3-left" style="width:50%" id="blMinute">00</td>
+                </tr>
+                <tr>
+                  <td class="w3-left" style="width:50%">Totle Second:</td>
+                  <td class="w3-left" style="width:50%" id="blSecond">00</td>
+                </tr>
+            </table>
+            <br/>
+            <div onclick="makScreenShot()" class="rz-app-result-table w3-theme-d1 rz-app-result-ss-btn"><i class="fa fa-user-o"></i> <b>Share with Social Profile</b></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Side Navbar -->
+<nav id="mySidenav" class="w3-sidenav w3-top w3-animate-left" style="z-index:3;width:75%;display:none">
+<div class="w3-theme-d1 rz-sidebar-bg">
+<!--    <div class="rz-sidebar-close-icon w3-theme-d3 w3-closenav"><i onclick="closeNav()" class="fa fa-close"></i></div>-->
+    <!-- Profile -->
+     <div class="rz-sidebar-profile">
+         <img onclick="document.getElementById('socialPlugin').style.display='block'" id="userPP" src="img/Avatar.png" class="rz-sidebar-img-circle" alt="Avatar"/>
+         <div id="userName" class="rz-sidebar-username">John Doe</div>
+    </div>
+
+    <!-- Profile Settings -->
+    <div style="text-align:right">
+        <i id="icn" onclick="toggleSetting()" class="w3-theme-d3 rz-sidebar-toggle-list fa fa-caret-down"></i>
+    </div>
+</div>
+
+<!-- Profile Setting List -->
+<div id="list2" class="rz-sidebar-options-list w3-text-theme" style="display:none">
+    <a onclick="changeUN()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Change Name</a>
+
+    <a onclick="changePP()"><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp;Change Image</a>
+</div>
+
+<!-- Options List -->
+<div id="list1" class="rz-sidebar-options-list w3-text-theme w3-animate-bottom">
+
+  <a href="javascript:void(0)" onclick="document.getElementById('theme').style.display='block';"><i class="fa fa-th w3-padding-right" aria-hidden="true"></i> Theme</a>
+
+    <a href="javascript:void(0)" onclick="window.plugins.socialsharing.share('আপনি জানেন কি? বাংলা কত সালের কোন মাসের কত তারিখে আপনার জন্ম হয়েছে? যদি না জেনে থাকেন, তাহলে জানতে পারবেন এই অ্যাপটির মাধ্যমে! Download Link - ', null,'www/icon.png','http://goo.gl/LEcnyW');"><i class="fa fa-bullhorn w3-padding-right"></i> Share</a>
+
+  <a href="market://details?id=com.mru.studio.ageconverter"><i class="fa fa-star w3-padding-right" aria-hidden="true"></i> Rating</a>
+
+    <a href="mailto:m.r.u.khan2012@gmail.com?subject=E2B Age Converter&body=Write Your feedback"><i class="fa fa-paper-plane-o w3-padding-right" aria-hidden="true"></i> Feedback</a>
+
+  <a href="javascript:void(0)" onclick="document.getElementById('about').style.display='block';"><i class="fa fa-info-circle w3-padding-right" aria-hidden="true"></i> About</a>
+</div>
+</nav>
+
+<!-- About Model -->
+<div id="about" class="w3-modal" style="z-index:4;">
+ <div class="w3-modal-content w3-card-8 w3-animate-zoom">
+  <header class="rz-about-header w3-container w3-theme">
+   About Us
+  </header>
+     <div class="rz-about-paragraph w3-container w3-theme-l4 w3-text-theme">
+            <p><strong>Age Calculator</strong> is a Chronological Age Calculate app. Calculate Person's Age &amp; Calculate Between Two Different Date in How many Years, Months, Weeks, Days, Hours, Minutes and Second's.</p>
+         <p>Like This App Please Rate/Review it. Any Suggestion About this App<br/> <i class="fa fa-send-o"></i> <a style="
+        text-decoration: underline" href="mailto:m.r.u.khan2012@gmail.com?subject=E2B Age Converter&body=Write Your feedback">Send us E-Mail</a>.</p>
+     </div>
+    <div class="w3-theme-d2">
+        <div class="footer-social-icons">
+            <ul class="social-icons">
+                <li class="social-icon">Follow us: </li>
+                <li><a href="" class="w3-theme-d4 social-icon"> <i class="fa fa-play" aria-hidden="true"></i></a></li>
+                <li><a href="" class="w3-theme-d4 social-icon"> <i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                <li><a href="" class="w3-theme-d4 social-icon"> <i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                <li><a href="" class="w3-theme-d4 social-icon"> <i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                <li><a href="" class="w3-theme-d4 social-icon"> <i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+        <div class="w3-theme-d5 copyright-mru-studio">&copy; 2017 MRU Studio</div>
+    </div>
+
+  <div class="rz-about-footer w3-container w3-theme">
+   <button class="rz-about-close-btn w3-btn w3-border w3-border-theme w3-theme-d4"
+   onclick="document.getElementById('about').style.display='none'"><i class="fa fa-close" aria-hidden="true"></i> Close</button>
+  </div>
+ </div>
+</div>
+
+<!-- Age Calculator Theme - Model -->
+<div id="theme" class="w3-modal" style="display:none;">
+ <div class="w3-modal-content w3-card-8 w3-animate-left">
+  <header class="rz-theme-header w3-theme"><i class="fa fa-th-large"></i>
+   Select Theme
+  </header>
+     <div class="w3-model-content w3-animate-zoom">
+        <div class="w3-center rz-theme-nav" id="rzTheme">
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thLapisBlue" class="rz-theme-color-box" style="background-color:#004B8D;"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thRiverside" class="rz-theme-checked rz-theme-color-box" style="background-color:#4C6A92"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thNiagara" class="rz-theme-color-box" style="background-color:#5484A4"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thSharkskin" class="rz-theme-color-box" style="background-color:#838487"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thLushMeadow" class="rz-theme-color-box" style="background-color:#006E51"></span>
+
+            <br/>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thAuroraRed" class="rz-theme-color-box" style="background-color:#B93A32"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thFlame" class="rz-theme-color-box" style="background-color:#F2552C"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thPottersClay" class="rz-theme-color-box" style="background-color:#9E4624"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thPinkYarrow" class="rz-theme-color-box" style="background-color:#CE3175"></span>
+
+            <span onclick="selectTheme(this.id, this.tagName)" id="thKale" class="rz-theme-color-box" style="background-color:#5A7247"></span>
+        </div>
+    </div>
+    <div class="w3-theme-d2">
+        <div class="rz-theme-footer w3-container w3-theme">
+            <button onclick="selectTheme(this.id, this.tagName), document.getElementById('theme').style.display='none'" id="closeBtn" class="rz-theme-close-btn w3-theme-d4 w3-btn w3-border w3-border-theme"><i class="fa fa-close" aria-hidden="true"></i> Close</button>
+        </div>
+    </div>
+</div>
+</div>
+
+    <!-- Social Plugin -->
+<div id="socialPlugin" class="rz-modal" style="display:none;">
+ <div class="w3-modal-content w3-card-8 w3-animate-top">
+  <header class="rz-social-header w3-container w3-theme rz-theme-font-sans">
+   Social Profile Access <i onclick="document.getElementById('socialPlugin').style.display='none'" class="rz-icon-spa fa fa-close"></i>
+  </header>
+     <div class="rz-social-paragraph w3-container w3-theme-l4">
+        <p class="w3-text-theme"><b>Age Calculator</b> Connect Your Social Profile, Calculate Your Age Easily.</p>
+        <div class="rz-login-btn rz-login-btn-facebook" onclick="getInfoFB()"><i class="rz-icon fa fa-facebook-official" aria-hidden="true"></i> Connect with Facebook</div>
+
+        <div class="rz-login-btn rz-login-btn-twitter" onclick="getInfoTwitter()"><i class="rz-icon fa fa-twitter-square" aria-hidden="true"></i> Connect with Twitter</div>
+
+        <div class="rz-login-btn rz-login-btn-google" onclick="getInfoGooglePlus()"><i class="rz-icon fa fa-google-plus-official" aria-hidden="true"></i> Connect with Google+</div><br/><br/>
+    </div>
+</div>
+</div>
+
+    <!-- age result screen short -->
+<div id="ageReSS" class="w3-modal">
+    
+    <!-- Close Window -->
+    <div class="rz-share-age-close-btn-div"><span onclick="document.getElementById('ageReSS').style.display='none'" class="rz-share-age-close-btn w3-btn-floating w3-theme"><i class="fa fa-close"></i></span></div>
+    
+    <div class="w3-modal-content">
+      <div id="PSS" class="rz-share-age-pad">
+          <div id="userCP2" class="rz-share-age-cover w3-theme-d1 rz-sidebar-bg">
+         <div id="userName2" class="rz-share-age-username">John Doe</div>
+            <img id="userPP2" src="img/Avatar.png" class="rz-share-age-img-cricle" alt="Avatar"/>
+          </div>
+           <table class="rz-share-age-table-td2age w3-table">
+                <tr>
+                  <th class="w3-theme w3-center" colspan="3"><span class="fa fa-balance-scale"></span> Today Age is</th>
+                </tr>
+                <tr>
+                  <td class="w3-center">Year</td>
+                  <td class="w3-center">Month</td>
+                  <td class="w3-center">Day</td>
+                </tr>
+                <tr>
+                  <td class="w3-center" id="saYear">00</td>
+                  <td class="w3-center" id="saMonth">00</td>
+                  <td class="w3-center" id="saDate">00</td>
+                </tr>
+            </table>
+            <table class="rz-share-age-table-td2age w3-table">
+                <tr>
+                  <th class="w3-theme w3-center" colspan="3"><span class="fa fa-birthday-cake"></span>&nbsp; Upcoming Birthday </th>
+                </tr>
+                <tr>
+                  <td class="rz-share-age-table-upcomming-dob">Your Next Birthday After <span class="rz-share-age-table-nb w3-theme-d1" id="nbDay2">98</span> Days.</td>
+                </tr>
+            </table>
+      </div>
+        <div class="rz-share-age-share-pad w3-theme-d1" id="localShare" onclick="shareAge(this.id);"><i class="fa fa-share-alt"></i> Share with Social Profile</div><br/>
+        
+<!--        <div style="border:2px solid orange" id="testSS"></div>-->
+        
+    </div>
+</div>
+</body>
+</html>
